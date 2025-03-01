@@ -1,0 +1,22 @@
+services:
+  mysql:
+    container_name: shopping_mysql
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=shoppinglist'
+      - 'MYSQL_PASSWORD=picapapas'
+      - 'MYSQL_ROOT_PASSWORD=picapapas'
+      - 'MYSQL_USER=alberto'
+    ports:
+      - 33061:3306
+
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:latest
+    container_name: cloudbeaver
+    volumes:
+      - cloudbeaver-data:/opt/cloudbeaver/workspace
+    ports:
+      - 8978:8978
+
+volumes:
+  cloudbeaver-data:
