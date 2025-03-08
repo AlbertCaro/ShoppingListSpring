@@ -1,11 +1,13 @@
 package dev.albertocaro.shopping_list.infrastructure.user
 
-import dev.albertocaro.shopping_list.domain.models.User
+import dev.albertocaro.shopping_list.di.OpenApiConfig
 import dev.albertocaro.shopping_list.domain.models.toDomain
 import dev.albertocaro.shopping_list.domain.usecases.user.*
 import dev.albertocaro.shopping_list.infrastructure.user.dto.UserDeserializationDto
 import dev.albertocaro.shopping_list.infrastructure.user.dto.UserSerializationDto
 import dev.albertocaro.shopping_list.infrastructure.user.dto.toSerialization
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/users")
+@Tag(name = "Usuarios", description = "Módulo de gestión de usuarios del sistema")
+@SecurityRequirement(name = OpenApiConfig.SECURITY_SCHEME_NAME)
 class UserController(
     private val getAllUsersUseCase: GetAllUsersUseCase,
     private val getUserByIdUseCase: GetUserByIdUseCase,

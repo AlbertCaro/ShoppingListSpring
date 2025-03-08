@@ -5,11 +5,12 @@ import dev.albertocaro.shopping_list.infrastructure.common.RequestProviderServic
 import dev.albertocaro.shopping_list.infrastructure.user.dto.UserDeserializationDto
 import jakarta.validation.ConstraintValidator
 import jakarta.validation.ConstraintValidatorContext
+import org.springframework.http.HttpMethod
 
 class UniqueUserEmailValidator(
     private val getUserByEmail: GetUserByEmailUseCase,
     private val requestProviderService: RequestProviderService
-) : ConstraintValidator<UniqueUserEmail, UserDeserializationDto> {
+) : ConstraintValidator<UniqueUserEmail, String> {
 
     private lateinit var message: String
 
@@ -17,22 +18,22 @@ class UniqueUserEmailValidator(
         message = constraintAnnotation.message
     }
 
-    override fun isValid(value: UserDeserializationDto?, context: ConstraintValidatorContext): Boolean {
-        if (value == null) return true
+    override fun isValid(email: String?, context: ConstraintValidatorContext): Boolean {
+        if (email == null) return true
 
-        if (value.email.isNullOrBlank() || value.email.isEmpty()) return true
+        if (email.isBlank() || email.isEmpty()) return true
 
-        val user = getUserByEmail(value.email) ?: return true
+        val user = getUserByEmail(email) ?: return true
 
         val request = requestProviderService.getRequest()
 
-        if (request!!.method == "PUT") {
+        if (request!!.method == HttpMethod.PUT.name()) {
             val editUserId = request.requestURI!!.replace("/users/", "").toLong()
 
             if (user.id == editUserId) return true
         }
 
-        val message = this.message.replace("{email}", value.email)
+        val message = this.message.replace("{email}", email)
         context.disableDefaultConstraintViolation()
         context.buildConstraintViolationWithTemplate(message)
             .addPropertyNode("email")

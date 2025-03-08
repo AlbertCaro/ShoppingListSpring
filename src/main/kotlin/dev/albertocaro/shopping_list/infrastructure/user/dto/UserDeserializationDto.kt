@@ -1,16 +1,17 @@
 package dev.albertocaro.shopping_list.infrastructure.user.dto
 
 import dev.albertocaro.shopping_list.infrastructure.user.validation.UniqueUserEmail
+import dev.albertocaro.shopping_list.infrastructure.user.validation.UniqueUsername
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 
-@UniqueUserEmail
 data class UserDeserializationDto(
     @field:NotNull
     @field:NotBlank
     @field:Size(max = 255)
+    @field:UniqueUsername
     val username: String?,
 
     @field:NotNull
@@ -22,6 +23,7 @@ data class UserDeserializationDto(
     @field:NotBlank
     @field:Size(max = 255)
     @field:Email
+    @field:UniqueUserEmail
     val email: String?,
 
     @field:NotNull

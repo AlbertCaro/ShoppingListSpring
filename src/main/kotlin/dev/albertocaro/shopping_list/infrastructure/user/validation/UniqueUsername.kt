@@ -7,9 +7,9 @@ import kotlin.reflect.KClass
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
-@Constraint(validatedBy = [UniqueUserEmailValidator::class])
-annotation class UniqueUserEmail(
-    val message: String = "El correo electrónico \"{email}\" ya se encuentra utilizado",
+@Constraint(validatedBy = [UniqueUsernameValidator::class])
+annotation class UniqueUsername(
+    val message: String = "El nombre de usuario \"{username}\" ya se encuentra utilizado",
     val groups: Array<KClass<*>> = [],
-    val payload: Array<KClass<out Payload>> = []
+    val payload: Array<KClass<out Payload>> = [],
 )

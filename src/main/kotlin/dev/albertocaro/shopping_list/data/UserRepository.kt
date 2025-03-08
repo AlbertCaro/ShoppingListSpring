@@ -16,6 +16,10 @@ class UserRepository(private val jpaRepository: JpaUserRepository) {
         return jpaRepository.findByEmail(email)?.toDomain()
     }
 
+    fun findByUsername(username: String): User? {
+        return jpaRepository.findByUsername(username)?.toDomain()
+    }
+
     fun findById(id: Long): User? {
         val entity = jpaRepository.findById(id)
 
