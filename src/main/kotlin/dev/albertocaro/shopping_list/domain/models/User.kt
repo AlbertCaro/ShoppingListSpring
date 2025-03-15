@@ -12,7 +12,7 @@ data class User(
 
     val email: String,
 
-    val name: String,
+    var name: String,
 
     val lastName: String,
 )

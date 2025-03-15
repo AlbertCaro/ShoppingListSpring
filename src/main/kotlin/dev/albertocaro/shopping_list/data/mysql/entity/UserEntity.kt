@@ -23,6 +23,9 @@ data class UserEntity (
 
     @Column(nullable = false)
     val lastName: String,
+
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val shoppingLists: List<ShoppingListEntity> = mutableListOf()
 )
 
 fun User.toDatabase() = UserEntity(id, username, password, email, name, lastName)
